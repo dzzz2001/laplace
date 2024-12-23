@@ -17,7 +17,7 @@ void compute_next(
         cudaMemcpy(x_old_d, x_old_h, npts_local_x * npts_local_y * sizeof(double), cudaMemcpyHostToDevice));
     cudaErrCheck(cudaMemset(diff_d, 0, sizeof(double)));
 
-    dim3 block(16, 16);
+    dim3 block(8, 8);
     dim3 grid((npts_local_x - 2 + block.x - 1) / block.x,
               (npts_local_y - 2 + block.y - 1) / block.y);
 

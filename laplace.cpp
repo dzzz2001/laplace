@@ -58,6 +58,16 @@ int main(int argc, char *argv[])
     MPI_Comm_rank(comm_2d, &my_rank);
     MPI_Cart_coords(comm_2d, my_rank, 2, coords);
 
+    int device_num;
+    cudaErrCheck(cudaGetDeviceCount(&device_num));
+    if(device_num == 0)
+    {
+        std::cerr << "No CUDA device found\n";
+        MPI_Finalize();
+        return 0;
+    }
+    cudaErrCheck(cudaSetDevice(my_rank % device_num));
+
     // number of points in x and y directions for each subdomain
     int npts_local_x = npts_x / ns_x + 2;
     if (coords[0] == 0)
