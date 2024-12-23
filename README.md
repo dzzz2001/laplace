@@ -48,3 +48,6 @@ Assuming you want to run the program with 4 processes, 100 grid points in each d
 ```bash
 mpirun -np 4 ./your_executable 100 100 2 2 1000 0
 ```
+
+## Reference
+https://github.com/jcorbino/laplace
