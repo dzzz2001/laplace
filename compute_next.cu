@@ -3,7 +3,7 @@
 __global__
 void iter_kernel_jacobi(double *x_old, double *x_new, int npts_x, int npts_y, double *diff);
 __global__
-void iter_kernel_gs(double *x_old, double *x_new, int npts_x, int npts_y, double *diff);
+void iter_kernel_gs(double *x_old, double *x_new, int npts_x, int npts_y, double *diff, bool is_red);
 
 
 void compute_next(
@@ -27,7 +27,8 @@ void compute_next(
     }
     else
     {
-        iter_kernel_gs<<<grid, block>>>(x_old_d, x_new_d, npts_local_x, npts_local_y, diff_d);
+        iter_kernel_gs<<<grid, block>>>(x_old_d, x_new_d, npts_local_x, npts_local_y, diff_d, true);
+        iter_kernel_gs<<<grid, block>>>(x_old_d, x_new_d, npts_local_x, npts_local_y, diff_d, false);
     }
 
     // transfer data from device to host
